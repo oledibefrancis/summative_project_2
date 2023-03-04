@@ -1,11 +1,11 @@
 package com.company.bookstore.models;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -15,9 +15,14 @@ public class Author implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "author_id")
     int id;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "authorId")
+    private Set<Book> albums = new HashSet<>();
+
     @Size(max = 50)
     String firstName;
-    @Size(max = 50)
+    @Size(max = 5)
     String lastName;
     @Size(max = 50)
     String street;
@@ -99,7 +104,14 @@ public class Author implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return getId() == author.getId() && Objects.equals(getFirstName(), author.getFirstName()) && Objects.equals(getLastName(), author.getLastName()) && Objects.equals(getStreet(), author.getStreet()) && Objects.equals(getState(), author.getState()) && Objects.equals(getPostalCode(), author.getPostalCode()) && Objects.equals(getPhone(), author.getPhone()) && Objects.equals(getEmail(), author.getEmail());
+        return getId() == author.getId() &&
+                Objects.equals(getFirstName(), author.getFirstName()) &&
+                Objects.equals(getLastName(), author.getLastName()) &&
+                Objects.equals(getStreet(), author.getStreet()) &&
+                Objects.equals(getState(), author.getState()) &&
+                Objects.equals(getPostalCode(), author.getPostalCode()) &&
+                Objects.equals(getPhone(), author.getPhone()) &&
+                Objects.equals(getEmail(), author.getEmail());
     }
 
     @Override
