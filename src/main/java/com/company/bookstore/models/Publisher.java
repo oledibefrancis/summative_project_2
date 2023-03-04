@@ -1,31 +1,39 @@
 package com.company.bookstore.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name="publisher")
 public class Publisher {
-
-//    name varchar(50)not null,
-//    street varchar(50) not null,
-//    city varchar(50) not null,
-//    state char(2) not null,
-//    postal_code varchar(25) not null,
-//    phone varchar(15) not null,
-//    email varchar(60) not null
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int publisherId;
 
-    @Size()
+    @Size(max = 50)
     private String name;
+
+    @Size(max = 50)
     private String street;
+
+    @Size(max = 50)
     private String city;
+
+    @Size(max = 2, min = 2)
     private String state;
+
+    @Size(max = 25)
     private String postalCode;
+    @Size(max = 15)
     private String phone;
+
+    @Size(max = 60)
     private String email;
 
     public int getPublisherId() {
