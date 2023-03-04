@@ -2,10 +2,7 @@ package com.company.bookstore.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -13,6 +10,8 @@ import java.util.Objects;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name="publisher")
 public class Publisher {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int publisherId;
 
