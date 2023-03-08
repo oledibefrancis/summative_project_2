@@ -52,6 +52,7 @@ public class BookController {
         if (item.getTitle() != null) instance.setTitle(item.getTitle());
         instance.setPublisherId(item.getPublisherId());
         if (item.getPrice() != null) instance.setPrice(item.getPrice());
+        if (item.getPublishDate() != null) instance.setPublishDate(item.getPublishDate());
 
 
         return repo.save(instance);
