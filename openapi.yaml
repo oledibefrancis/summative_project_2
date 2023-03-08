@@ -338,6 +338,8 @@ components:
         publisherId:
           type: integer
           format: int32
+        publishDate:
+          type: string
         price:
           type: number
     Author:
@@ -346,6 +348,11 @@ components:
         id:
           type: integer
           format: int32
+        albums:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Book'
         firstName:
           maxLength: 50
           minLength: 0
@@ -355,6 +362,10 @@ components:
           minLength: 0
           type: string
         street:
+          maxLength: 50
+          minLength: 0
+          type: string
+        city:
           maxLength: 50
           minLength: 0
           type: string
