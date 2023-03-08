@@ -50,6 +50,7 @@ public class AuthorController {
         if (item.getFirstName() != null) instance.setFirstName(item.getFirstName());
         if (item.getLastName() != null) instance.setLastName(item.getLastName());
         if (item.getEmail() != null) instance.setEmail(item.getEmail());
+        if (item.getCity() != null) instance.setCity(item.getCity());
         if (item.getPhone() != null) instance.setPhone(item.getPhone());
         if (item.getEmail() != null) instance.setEmail(item.getEmail());
         if (item.getState() != null) instance.setState(item.getState());

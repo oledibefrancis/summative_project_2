@@ -26,6 +26,8 @@ public class Author implements Serializable {
     String lastName;
     @Size(max = 50)
     String street;
+    @Size(max = 50)
+    String city;
     @Size(min = 2, max = 2)
     String state;
     @Size(max = 25)
@@ -41,6 +43,14 @@ public class Author implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Set<Book> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(Set<Book> albums) {
+        this.albums = albums;
     }
 
     public String getFirstName() {
@@ -65,6 +75,14 @@ public class Author implements Serializable {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getState() {
@@ -105,9 +123,11 @@ public class Author implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
         return getId() == author.getId() &&
+                Objects.equals(getAlbums(), author.getAlbums()) &&
                 Objects.equals(getFirstName(), author.getFirstName()) &&
                 Objects.equals(getLastName(), author.getLastName()) &&
                 Objects.equals(getStreet(), author.getStreet()) &&
+                Objects.equals(getCity(), author.getCity()) &&
                 Objects.equals(getState(), author.getState()) &&
                 Objects.equals(getPostalCode(), author.getPostalCode()) &&
                 Objects.equals(getPhone(), author.getPhone()) &&
@@ -116,6 +136,15 @@ public class Author implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getStreet(), getState(), getPostalCode(), getPhone(), getEmail());
+        return Objects.hash(getId(),
+                getAlbums(),
+                getFirstName(),
+                getLastName(),
+                getStreet(),
+                getCity(),
+                getState(),
+                getPostalCode(),
+                getPhone(),
+                getEmail());
     }
 }
