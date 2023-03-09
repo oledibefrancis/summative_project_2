@@ -14,7 +14,7 @@ public class Author implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "author_id")
-    int id;
+    private int id;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "authorId")
@@ -25,17 +25,17 @@ public class Author implements Serializable {
     @Size(max = 50)
     String lastName;
     @Size(max = 50)
-    String street;
+    private String street;
     @Size(max = 50)
-    String city;
+    private String city;
     @Size(min = 2, max = 2)
-    String state;
+    private String state;
     @Size(max = 25)
-    String postalCode;
+    private String postalCode;
     @Size(max = 15)
-    String phone;
+    private String phone;
     @Size(max = 60)
-    String email;
+    private String email;
 
     public int getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.company.bookstore.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -14,13 +15,18 @@ import java.util.Objects;
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int bookId;
+    private int bookId;
     @Size(max =15)
-    String isbn;
+    private String isbn;
     int authorId;
     @Size(max =70)
-    String title;
-    int publisherId;
+    private String title;
+    private int publisherId;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private String publishDate;
+
+
     @Column(precision = 5, scale = 2)
     BigDecimal price;
 
@@ -72,6 +78,14 @@ public class Book implements Serializable {
         this.price = price;
     }
 
+    public String getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,11 +96,12 @@ public class Book implements Serializable {
                 getPublisherId() == book.getPublisherId() &&
                 Objects.equals(getIsbn(), book.getIsbn()) &&
                 Objects.equals(getTitle(), book.getTitle()) &&
-                Objects.equals(getPrice(), book.getPrice());
+                Objects.equals(getPrice(), book.getPrice()) &&
+                Objects.equals(getPublishDate(), book.getPublishDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getBookId(), getIsbn(), getAuthorId(), getTitle(), getPublisherId(), getPrice());
+        return Objects.hash(getBookId(), getIsbn(), getAuthorId(), getTitle(), getPublisherId(), getPrice(),getPublishDate());
     }
 }
