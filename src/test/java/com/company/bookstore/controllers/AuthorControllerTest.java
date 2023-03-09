@@ -31,6 +31,8 @@ public class AuthorControllerTest {
     @MockBean
     AuthorRepository authorRepository;
 
+    private ObjectMapper mapper = new ObjectMapper();
+
     public Author createAuthor() {
         Author author = new Author();
         author.setId(1);
@@ -43,8 +45,6 @@ public class AuthorControllerTest {
         return author;
     }
 
-
-    private ObjectMapper mapper = new ObjectMapper();
 
     @Before
     public void setUp() throws Exception {
@@ -112,7 +112,7 @@ public class AuthorControllerTest {
 
         authorRepository.deleteById(author.getId());
 
-        mockMvc.perform(delete("/authors/"+author.getId()))
+        mockMvc.perform(delete("/authors/" + author.getId()))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }

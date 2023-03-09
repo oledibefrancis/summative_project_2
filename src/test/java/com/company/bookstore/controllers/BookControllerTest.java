@@ -1,6 +1,5 @@
 package com.company.bookstore.controllers;
 
-import com.company.bookstore.models.Author;
 import com.company.bookstore.models.Book;
 import com.company.bookstore.repositories.BookRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,7 +32,7 @@ public class BookControllerTest {
     BookRepository bookRepository;
 
 
-
+    private ObjectMapper mapper = new ObjectMapper();
 
     public Book createBook() {
         Book book = new Book();
@@ -47,8 +46,6 @@ public class BookControllerTest {
         return book;
     }
 
-
-    private ObjectMapper mapper = new ObjectMapper();
 
     @Before
     public void setUp() throws Exception {
@@ -73,6 +70,17 @@ public class BookControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
+//    @Test
+//    public void testGetBookByAuthorId() throws Exception {
+//        Book book = createBook();
+//
+//        when(bookRepository.findBooksByAuthorId(book.getBookId())).thenReturn(Optional.of(book));
+//
+//        mockMvc.perform(get("/books/author/" + book.getAuthorId()))
+//                .andDo(print())
+//                .andExpect(status().isOk());
+//    }
 
     @Test
     public void testAddBook() throws Exception {
@@ -116,7 +124,7 @@ public class BookControllerTest {
 
         bookRepository.deleteById(book.getBookId());
 
-        mockMvc.perform(delete("/books/"+book.getBookId()))
+        mockMvc.perform(delete("/books/" + book.getBookId()))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }

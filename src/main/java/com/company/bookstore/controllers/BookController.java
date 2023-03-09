@@ -58,6 +58,13 @@ public class BookController {
         return repo.save(instance);
     }
 
+
+//    @GetMapping("/books/author/{authorId}")
+//    public Book getBooksByAuthorId(@PathVariable int authorId) {
+//        Book instance = repo.findBooksByAuthorId(authorId);
+//        return repo.save(instance);
+//    }
+
     @DeleteMapping("/books/{bookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Book deleteBook(@PathVariable int bookId) {
