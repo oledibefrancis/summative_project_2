@@ -1,5 +1,4 @@
 package com.company.bookstore.controllers;
-
 import com.company.bookstore.models.Author;
 import com.company.bookstore.models.Book;
 import com.company.bookstore.repositories.BookRepository;
@@ -120,4 +119,3 @@ public class BookControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
-}

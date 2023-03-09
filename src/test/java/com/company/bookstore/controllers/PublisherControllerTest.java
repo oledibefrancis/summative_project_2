@@ -1,5 +1,4 @@
 package com.company.bookstore.controllers;
-
 import com.company.bookstore.models.Publisher;
 import com.company.bookstore.repositories.PublisherRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -116,4 +115,3 @@ public class PublisherControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
-}
