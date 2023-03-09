@@ -22,7 +22,7 @@ public class Author implements Serializable {
 
     @Size(max = 50)
     String firstName;
-    @Size(max = 5)
+    @Size(max = 50)
     String lastName;
     @Size(max = 50)
     String street;
