@@ -1,5 +1,4 @@
 package com.company.bookstore.controllers;
-
 import com.company.bookstore.models.Publisher;
 import com.company.bookstore.repositories.PublisherRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,8 +43,6 @@ public class PublisherControllerTest {
         publisher.setStreet("900 Coco Ave");
         return publisher;
     }
-
-
 
 
     @Before
@@ -114,7 +111,7 @@ public class PublisherControllerTest {
 
         authorRepository.deleteById(author.getPublisherId());
 
-        mockMvc.perform(delete("/publishers/"+author.getPublisherId()))
+        mockMvc.perform(delete("/publishers/" + author.getPublisherId()))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }

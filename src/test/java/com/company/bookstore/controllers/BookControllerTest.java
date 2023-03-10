@@ -1,5 +1,4 @@
 package com.company.bookstore.controllers;
-
 import com.company.bookstore.models.Book;
 import com.company.bookstore.repositories.BookRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -71,16 +72,19 @@ public class BookControllerTest {
                 .andExpect(status().isOk());
     }
 
-//    @Test
-//    public void testGetBookByAuthorId() throws Exception {
-//        Book book = createBook();
-//
-//        when(bookRepository.findBooksByAuthorId(book.getBookId())).thenReturn(Optional.of(book));
-//
-//        mockMvc.perform(get("/books/author/" + book.getAuthorId()))
-//                .andDo(print())
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    public void testGetBookByAuthorId() throws Exception {
+        Book book = createBook();
+
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(book);
+
+        when(bookRepository.findBookByAuthorId(book.getBookId())).thenReturn(bookList);
+
+        mockMvc.perform(get("/books/author/" + book.getAuthorId()))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 
     @Test
     public void testAddBook() throws Exception {
@@ -122,10 +126,9 @@ public class BookControllerTest {
 
         when(bookRepository.findById(book.getBookId())).thenReturn(Optional.of(book));
 
-        bookRepository.deleteById(book.getBookId());
-
         mockMvc.perform(delete("/books/" + book.getBookId()))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
+
 }

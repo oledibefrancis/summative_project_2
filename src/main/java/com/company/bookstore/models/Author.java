@@ -21,9 +21,9 @@ public class Author implements Serializable {
     private Set<Book> albums = new HashSet<>();
 
     @Size(max = 50)
-    private String firstName;
-    @Size(max = 5)
-    private String lastName;
+    String firstName;
+    @Size(max = 50)
+    String lastName;
     @Size(max = 50)
     private String street;
     @Size(max = 50)
