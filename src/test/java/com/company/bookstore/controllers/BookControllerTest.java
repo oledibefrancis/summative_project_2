@@ -2,6 +2,7 @@ package com.company.bookstore.controllers;
 import com.company.bookstore.models.Book;
 import com.company.bookstore.repositories.BookRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(BookController.class)
 public class BookControllerTest {
 
+
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -33,12 +37,17 @@ public class BookControllerTest {
     BookRepository bookRepository;
 
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private ObjectMapper mapper;
+
+    public BookControllerTest() {
+        this.mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+    }
 
     public Book createBook() {
         Book book = new Book();
         book.setBookId(1);
-        book.setPublishDate("2020-08-05");
+        book.setPublishDate(LocalDate.of(2020,8,5));
         book.setPrice(new BigDecimal("20.29"));
         book.setIsbn("235235235235");
         book.setAuthorId(1);

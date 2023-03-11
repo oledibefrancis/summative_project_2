@@ -17,5 +17,10 @@ You will also provide support for querying with GraphQL. In addition, you will p
 3. As an API user, I would like to create, read, update, and delete books.
 4. As an API user, I would like to find all books by a given author.
 
+## Video Description
+- Dickson Afful: 
+- Francis Oledibe: 
+
 ### References
 - https://stackoverflow.com/questions/4078559/how-to-specify-doubles-precision-on-hibernate
+- https://howtodoinjava.com/jackson/java-8-date-time-type-not-supported-by-default/

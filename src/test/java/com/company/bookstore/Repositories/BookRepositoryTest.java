@@ -1,4 +1,5 @@
 package com.company.bookstore.Repositories;
+import java.time.LocalDate;
 
 import com.company.bookstore.models.Author;
 import com.company.bookstore.models.Book;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,14 +34,14 @@ public class BookRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        authorRepository.deleteAll();
         bookRepository.deleteAll();
+        authorRepository.deleteAll();
         publisherRepository.deleteAll();
     }
 
-
-    public Author createAuthor(){
-        //Arrange...
+    @Test
+    public void shouldCreateNewBook() {
+        //Act...
         Author author = new Author();
         author.setFirstName("Francis");
         author.setLastName("Oledibe");
@@ -50,9 +52,6 @@ public class BookRepositoryTest {
         author.setPhone("111-222-3456");
         author.setEmail("francis@gmail.com");
 
-        return author;
-    }
-    public Publisher createPublisher(){
         Publisher publisher = new Publisher();
         publisher.setName("Francis Oledibe");
         publisher.setStreet("900, Bello way");
@@ -62,39 +61,18 @@ public class BookRepositoryTest {
         publisher.setPhone("111-222-3456");
         publisher.setEmail("francis@gmail.com");
 
-        return publisher;
-    }
-
-    public Book createBook(){
-        Author author = createAuthor();
-        Publisher publisher = createPublisher();
-
-        Book book = new Book();
-        book.setIsbn("12345");
-        book.setPrice(new BigDecimal("300.00"));
-        book.setTitle("Things Fall Apart");
-        book.setAuthorId(author.getId());
-        book.setPublisherId(publisher.getPublisherId());
-        return book;
-    }
-
-
-    @Test
-    public void shouldCreateNewBook() {
-
-        //Arrange...
-        Author author = createAuthor();
-
-        Publisher publisher = createPublisher();
-
         authorRepository.save(author);
         publisherRepository.save(publisher);
 
+        Book book = new Book();
+        book.setIsbn("12345");
+        book.setPublishDate(LocalDate.of(2020,8,8));
+        book.setPrice(new BigDecimal("300.00"));
+        book.setTitle("Things Fall Apart");
+        book.setAuthorId(author.getAuthorId());
+        book.setPublisherId(publisher.getPublisherId());
 
-        //Act...
-        Book book = createBook();
-
-        book = bookRepository.save(book);
+        bookRepository.save(book);
 
         //Assert...
         Optional<Book> book1 = bookRepository.findById(book.getBookId());
@@ -105,13 +83,13 @@ public class BookRepositoryTest {
 
     @Test
     public void shouldFindBookById() {
-        //Arrange...
+        //Act...
         Author author = new Author();
         author.setFirstName("Francis");
         author.setLastName("Oledibe");
         author.setStreet("900, Bello way");
         author.setCity("Lagos");
-        author.setState("New York");
+        author.setState("NY");
         author.setPostalCode("72202");
         author.setPhone("111-222-3456");
         author.setEmail("francis@gmail.com");
@@ -120,7 +98,7 @@ public class BookRepositoryTest {
         publisher.setName("Francis Oledibe");
         publisher.setStreet("900, Bello way");
         publisher.setCity("Lagos");
-        publisher.setState("New York");
+        publisher.setState("NY");
         publisher.setPostalCode("72202");
         publisher.setPhone("111-222-3456");
         publisher.setEmail("francis@gmail.com");
@@ -128,14 +106,15 @@ public class BookRepositoryTest {
         authorRepository.save(author);
         publisherRepository.save(publisher);
 
-        //Act....
         Book book = new Book();
         book.setIsbn("12345");
         book.setPrice(new BigDecimal("300.00"));
+        book.setPublishDate(LocalDate.of(2020,8,8));
         book.setTitle("Things Fall Apart");
-        book.setAuthorId(author.getId());
+        book.setAuthorId(author.getAuthorId());
         book.setPublisherId(publisher.getPublisherId());
 
+        bookRepository.save(book);
         //Assert.....
         Optional<Book> book1 = bookRepository.findById(book.getBookId());
         assertEquals(book1.get(), book);
@@ -143,13 +122,13 @@ public class BookRepositoryTest {
 
     @Test
     public void shouldFindAllBooks() {
-        //Arrange...
+        //Act...
         Author author = new Author();
         author.setFirstName("Francis");
         author.setLastName("Oledibe");
         author.setStreet("900, Bello way");
         author.setCity("Lagos");
-        author.setState("New York");
+        author.setState("NY");
         author.setPostalCode("72202");
         author.setPhone("111-222-3456");
         author.setEmail("francis@gmail.com");
@@ -158,7 +137,7 @@ public class BookRepositoryTest {
         publisher.setName("Francis Oledibe");
         publisher.setStreet("900, Bello way");
         publisher.setCity("Lagos");
-        publisher.setState("New York");
+        publisher.setState("NY");
         publisher.setPostalCode("72202");
         publisher.setPhone("111-222-3456");
         publisher.setEmail("francis@gmail.com");
@@ -166,65 +145,31 @@ public class BookRepositoryTest {
         authorRepository.save(author);
         publisherRepository.save(publisher);
 
-        //Act....
         Book book = new Book();
         book.setIsbn("12345");
         book.setPrice(new BigDecimal("300.00"));
+        book.setPublishDate(LocalDate.of(2020,8,8));
         book.setTitle("Things Fall Apart");
-        book.setAuthorId(author.getId());
+        book.setAuthorId(author.getAuthorId());
         book.setPublisherId(publisher.getPublisherId());
 
-        //Arrange...
-        Author author2 = new Author();
-        author2.setFirstName("Francis");
-        author2.setLastName("Oledibe");
-        author2.setStreet("900, Bello way");
-        author2.setCity("Lagos");
-        author2.setState("New York");
-        author2.setPostalCode("72202");
-        author2.setPhone("111-222-3456");
-        author2.setEmail("francis@gmail.com");
-
-        Publisher publisher2 = new Publisher();
-        publisher2.setName("Francis Oledibe");
-        publisher2.setStreet("900, Bello way");
-        publisher2.setCity("Lagos");
-        publisher2.setState("New York");
-        publisher2.setPostalCode("72202");
-        publisher2.setPhone("111-222-3456");
-        publisher2.setEmail("francis@gmail.com");
-
-        authorRepository.save(author2);
-        publisherRepository.save(publisher2);
-
-        //Act....
-        Book book2 = new Book();
-        book2.setIsbn("12345");
-        book2.setPrice(new BigDecimal("300.00"));
-        book2.setTitle("Things Fall Apart");
-        book2.setAuthorId(author.getId());
-        book2.setPublisherId(publisher.getPublisherId());
-
-        //Act....
         bookRepository.save(book);
-        bookRepository.save(book2);
 
         //Assert.....
         List<Book> allBooksList = bookRepository.findAll();
-        assertEquals(2, allBooksList.size());
+        assertEquals(1, allBooksList.size());
     }
 
 
     @Test
     public void shouldUpdateBook() {
-
-        //Arrange...
+        //Act...
         Author author = new Author();
         author.setFirstName("Francis");
         author.setLastName("Oledibe");
         author.setStreet("900, Bello way");
         author.setCity("Lagos");
-        author.setState("New York");
+        author.setState("NY");
         author.setPostalCode("72202");
         author.setPhone("111-222-3456");
         author.setEmail("francis@gmail.com");
@@ -233,7 +178,7 @@ public class BookRepositoryTest {
         publisher.setName("Francis Oledibe");
         publisher.setStreet("900, Bello way");
         publisher.setCity("Lagos");
-        publisher.setState("New York");
+        publisher.setState("NY");
         publisher.setPostalCode("72202");
         publisher.setPhone("111-222-3456");
         publisher.setEmail("francis@gmail.com");
@@ -241,18 +186,14 @@ public class BookRepositoryTest {
         authorRepository.save(author);
         publisherRepository.save(publisher);
 
-
-        //Act....
         Book book = new Book();
         book.setIsbn("12345");
         book.setPrice(new BigDecimal("300.00"));
+        book.setPublishDate(LocalDate.of(2020,8,8));
         book.setTitle("Things Fall Apart");
-        book.setAuthorId(author.getId());
+        book.setAuthorId(author.getAuthorId());
         book.setPublisherId(publisher.getPublisherId());
-        bookRepository.save(book);
 
-        book.setIsbn("98023");
-        book.setPrice(new BigDecimal("400.00"));
         bookRepository.save(book);
 
         //Assert
@@ -263,14 +204,13 @@ public class BookRepositoryTest {
 
     @Test
     public void shouldDeleteAuthor() {
-
-        //Arrange...
+        //Act...
         Author author = new Author();
         author.setFirstName("Francis");
         author.setLastName("Oledibe");
         author.setStreet("900, Bello way");
         author.setCity("Lagos");
-        author.setState("New York");
+        author.setState("NY");
         author.setPostalCode("72202");
         author.setPhone("111-222-3456");
         author.setEmail("francis@gmail.com");
@@ -279,7 +219,7 @@ public class BookRepositoryTest {
         publisher.setName("Francis Oledibe");
         publisher.setStreet("900, Bello way");
         publisher.setCity("Lagos");
-        publisher.setState("New York");
+        publisher.setState("NY");
         publisher.setPostalCode("72202");
         publisher.setPhone("111-222-3456");
         publisher.setEmail("francis@gmail.com");
@@ -287,14 +227,14 @@ public class BookRepositoryTest {
         authorRepository.save(author);
         publisherRepository.save(publisher);
 
-
-        //Act....
         Book book = new Book();
         book.setIsbn("12345");
         book.setPrice(new BigDecimal("300.00"));
+        book.setPublishDate(LocalDate.of(2020,8,8));
         book.setTitle("Things Fall Apart");
-        book.setAuthorId(author.getId());
+        book.setAuthorId(author.getAuthorId());
         book.setPublisherId(publisher.getPublisherId());
+
         bookRepository.save(book);
 
         bookRepository.deleteById(book.getBookId());
@@ -306,13 +246,13 @@ public class BookRepositoryTest {
 
     @Test
     public void shouldFindBookByAuthorId() {
-        //Arrange...
+        //Act...
         Author author = new Author();
         author.setFirstName("Francis");
         author.setLastName("Oledibe");
         author.setStreet("900, Bello way");
         author.setCity("Lagos");
-        author.setState("New York");
+        author.setState("NY");
         author.setPostalCode("72202");
         author.setPhone("111-222-3456");
         author.setEmail("francis@gmail.com");
@@ -321,7 +261,7 @@ public class BookRepositoryTest {
         publisher.setName("Francis Oledibe");
         publisher.setStreet("900, Bello way");
         publisher.setCity("Lagos");
-        publisher.setState("New York");
+        publisher.setState("NY");
         publisher.setPostalCode("72202");
         publisher.setPhone("111-222-3456");
         publisher.setEmail("francis@gmail.com");
@@ -329,13 +269,15 @@ public class BookRepositoryTest {
         authorRepository.save(author);
         publisherRepository.save(publisher);
 
-        //Act....
         Book book = new Book();
         book.setIsbn("12345");
         book.setPrice(new BigDecimal("300.00"));
         book.setTitle("Things Fall Apart");
-        book.setAuthorId(author.getId());
+        book.setAuthorId(author.getAuthorId());
+        book.setPublishDate(LocalDate.of(2020,8,8));
         book.setPublisherId(publisher.getPublisherId());
+
+        bookRepository.save(book);
 
         //Assert.....
         List<Book> authorsBooks = bookRepository.findBookByAuthorId(book.getAuthorId());

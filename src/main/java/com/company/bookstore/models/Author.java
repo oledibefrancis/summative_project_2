@@ -13,8 +13,7 @@ import java.util.Set;
 public class Author implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "author_id")
-    private int id;
+    private int authorId;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "authorId")
@@ -37,12 +36,12 @@ public class Author implements Serializable {
     @Size(max = 60)
     private String email;
 
-    public int getId() {
-        return id;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAuthorId(int id) {
+        this.authorId = id;
     }
 
     public Set<Book> getAlbums() {
@@ -122,7 +121,7 @@ public class Author implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return getId() == author.getId() &&
+        return getAuthorId() == author.getAuthorId() &&
                 Objects.equals(getAlbums(), author.getAlbums()) &&
                 Objects.equals(getFirstName(), author.getFirstName()) &&
                 Objects.equals(getLastName(), author.getLastName()) &&
@@ -136,7 +135,7 @@ public class Author implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(),
+        return Objects.hash(getAuthorId(),
                 getAlbums(),
                 getFirstName(),
                 getLastName(),
