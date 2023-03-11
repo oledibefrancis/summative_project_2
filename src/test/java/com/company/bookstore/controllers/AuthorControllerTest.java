@@ -31,9 +31,10 @@ public class AuthorControllerTest {
     @MockBean
     AuthorRepository authorRepository;
 
+    private ObjectMapper mapper = new ObjectMapper();
+
     public Author createAuthor() {
         Author author = new Author();
-        author.setId(1);
         author.setFirstName("John");
         author.setLastName("Doe");
         author.setCity("Norfolk");
@@ -43,8 +44,6 @@ public class AuthorControllerTest {
         return author;
     }
 
-
-    private ObjectMapper mapper = new ObjectMapper();
 
     @Before
     public void setUp() throws Exception {
@@ -63,9 +62,9 @@ public class AuthorControllerTest {
     public void testGetAuthorById() throws Exception {
         Author author = createAuthor();
 
-        when(authorRepository.findById(author.getId())).thenReturn(Optional.of(author));
+        when(authorRepository.findById(author.getAuthorId())).thenReturn(Optional.of(author));
 
-        mockMvc.perform(get("/authors/" + author.getId()))
+        mockMvc.perform(get("/authors/" + author.getAuthorId()))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -74,7 +73,7 @@ public class AuthorControllerTest {
     public void testAddAuthor() throws Exception {
         Author author = createAuthor();
 
-        when(authorRepository.findById(author.getId())).thenReturn(Optional.of(author));
+        when(authorRepository.findById(author.getAuthorId())).thenReturn(Optional.of(author));
 
         String inputJson = mapper.writeValueAsString(author);
 
@@ -91,12 +90,12 @@ public class AuthorControllerTest {
     public void testUpdateAuthor() throws Exception {
         Author author = createAuthor();
 
-        when(authorRepository.findById(author.getId())).thenReturn(Optional.of(author));
+        when(authorRepository.findById(author.getAuthorId())).thenReturn(Optional.of(author));
 
         String inputJson = mapper.writeValueAsString(author);
 
         mockMvc.perform(
-                        put("/authors/" + author.getId())
+                        put("/authors/" + author.getAuthorId())
                                 .content(inputJson)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -108,11 +107,13 @@ public class AuthorControllerTest {
     public void testDeleteAuthor() throws Exception {
         Author author = createAuthor();
 
-        when(authorRepository.findById(author.getId())).thenReturn(Optional.of(author));
+        when(authorRepository.findById(author.getAuthorId())).thenReturn(Optional.of(author));
 
-        authorRepository.deleteById(author.getId());
+        authorRepository.deleteById(author.getAuthorId());
 
-        mockMvc.perform(delete("/authors/"+author.getId()))
+        mockMvc.perform(delete("/authors/" + author.getAuthorId()))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
+
+}

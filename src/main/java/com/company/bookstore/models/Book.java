@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -23,8 +25,7 @@ public class Book implements Serializable {
     private String title;
     private int publisherId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private String publishDate;
+    private LocalDate publishDate;
 
 
     @Column(precision = 5, scale = 2)
@@ -70,6 +71,14 @@ public class Book implements Serializable {
         this.publisherId = publisherId;
     }
 
+    public LocalDate getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(LocalDate publishDate) {
+        this.publishDate = publishDate;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -78,30 +87,16 @@ public class Book implements Serializable {
         this.price = price;
     }
 
-    public String getPublishDate() {
-        return publishDate;
-    }
-
-    public void setPublishDate(String publishDate) {
-        this.publishDate = publishDate;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return getBookId() == book.getBookId() &&
-                getAuthorId() == book.getAuthorId() &&
-                getPublisherId() == book.getPublisherId() &&
-                Objects.equals(getIsbn(), book.getIsbn()) &&
-                Objects.equals(getTitle(), book.getTitle()) &&
-                Objects.equals(getPrice(), book.getPrice()) &&
-                Objects.equals(getPublishDate(), book.getPublishDate());
+        return getBookId() == book.getBookId() && getAuthorId() == book.getAuthorId() && getPublisherId() == book.getPublisherId() && Objects.equals(getIsbn(), book.getIsbn()) && Objects.equals(getTitle(), book.getTitle()) && Objects.equals(getPublishDate(), book.getPublishDate()) && Objects.equals(getPrice(), book.getPrice());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getBookId(), getIsbn(), getAuthorId(), getTitle(), getPublisherId(), getPrice(),getPublishDate());
+        return Objects.hash(getBookId(), getIsbn(), getAuthorId(), getTitle(), getPublisherId(), getPublishDate(), getPrice());
     }
 }

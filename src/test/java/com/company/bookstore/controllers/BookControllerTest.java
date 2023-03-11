@@ -1,8 +1,8 @@
 package com.company.bookstore.controllers;
-import com.company.bookstore.models.Author;
 import com.company.bookstore.models.Book;
 import com.company.bookstore.repositories.BookRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +14,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -25,6 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(BookController.class)
 public class BookControllerTest {
 
+
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -32,12 +37,17 @@ public class BookControllerTest {
     BookRepository bookRepository;
 
 
+    private ObjectMapper mapper;
 
+    public BookControllerTest() {
+        this.mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+    }
 
     public Book createBook() {
         Book book = new Book();
         book.setBookId(1);
-        book.setPublishDate("2020-08-05");
+        book.setPublishDate(LocalDate.of(2020,8,5));
         book.setPrice(new BigDecimal("20.29"));
         book.setIsbn("235235235235");
         book.setAuthorId(1);
@@ -46,8 +56,6 @@ public class BookControllerTest {
         return book;
     }
 
-
-    private ObjectMapper mapper = new ObjectMapper();
 
     @Before
     public void setUp() throws Exception {
@@ -69,6 +77,20 @@ public class BookControllerTest {
         when(bookRepository.findById(book.getBookId())).thenReturn(Optional.of(book));
 
         mockMvc.perform(get("/books/" + book.getBookId()))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetBookByAuthorId() throws Exception {
+        Book book = createBook();
+
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(book);
+
+        when(bookRepository.findBookByAuthorId(book.getBookId())).thenReturn(bookList);
+
+        mockMvc.perform(get("/books/author/" + book.getAuthorId()))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -113,9 +135,9 @@ public class BookControllerTest {
 
         when(bookRepository.findById(book.getBookId())).thenReturn(Optional.of(book));
 
-        bookRepository.deleteById(book.getBookId());
-
-        mockMvc.perform(delete("/books/"+book.getBookId()))
+        mockMvc.perform(delete("/books/" + book.getBookId()))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
+
+}

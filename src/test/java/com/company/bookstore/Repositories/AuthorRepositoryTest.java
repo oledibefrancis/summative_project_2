@@ -1,4 +1,5 @@
 package com.company.bookstore.Repositories;
+
 import com.company.bookstore.models.Author;
 import com.company.bookstore.repositories.AuthorRepository;
 import org.junit.Before;
@@ -10,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -18,13 +20,14 @@ import static org.junit.Assert.assertFalse;
 public class AuthorRepositoryTest {
     @Autowired
     AuthorRepository authorRepository;
+
     @Before
     public void setUp() throws Exception {
         authorRepository.deleteAll();
     }
 
-    public Author createAuthor(){
-       Author author = new Author();
+    public Author createAuthor() {
+        Author author = new Author();
         author.setFirstName("Francis");
         author.setLastName("Oledibe");
         author.setStreet("900, Bello way");
@@ -33,7 +36,7 @@ public class AuthorRepositoryTest {
         author.setPostalCode("72202");
         author.setPhone("111-222-3456");
         author.setEmail("francis@gmail.com");
-       return author;
+        return author;
     }
 
     @Test
@@ -47,7 +50,7 @@ public class AuthorRepositoryTest {
         author = authorRepository.save(author);
 
         //Assert.....
-        Optional<Author> author1 = authorRepository.findById(author.getId());
+        Optional<Author> author1 = authorRepository.findById(author.getAuthorId());
 
         assertEquals(author1.get(), author);
     }
@@ -62,7 +65,7 @@ public class AuthorRepositoryTest {
         author = authorRepository.save(author);
 
         //Assert.....
-        Optional<Author> author1 = authorRepository.findById(author.getId());
+        Optional<Author> author1 = authorRepository.findById(author.getAuthorId());
 
         assertEquals(author1.get(), author);
     }
@@ -99,7 +102,7 @@ public class AuthorRepositoryTest {
         authorRepository.save(author);
 
         //Assert
-        Optional<Author> author1 = authorRepository.findById(author.getId());
+        Optional<Author> author1 = authorRepository.findById(author.getAuthorId());
         assertEquals(author1.get(), author);
 
     }
@@ -112,10 +115,10 @@ public class AuthorRepositoryTest {
         authorRepository.save(author);
 
         //Act....
-        authorRepository.deleteById(author.getId());
+        authorRepository.deleteById(author.getAuthorId());
 
         //Assert...
-        Optional<Author> author1 = authorRepository.findById(author.getId());
+        Optional<Author> author1 = authorRepository.findById(author.getAuthorId());
         assertFalse(author1.isPresent());
     }
 

@@ -282,6 +282,27 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Author'
+  /books/author/{authorId}:
+    get:
+      tags:
+        - book-controller
+      operationId: getBooksByAuthorId
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
 components:
   schemas:
     Publisher:
@@ -358,7 +379,7 @@ components:
           minLength: 0
           type: string
         lastName:
-          maxLength: 5
+          maxLength: 50
           minLength: 0
           type: string
         street:
