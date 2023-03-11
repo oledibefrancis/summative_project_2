@@ -19,7 +19,7 @@ You will also provide support for querying with GraphQL. In addition, you will p
 
 ## Video Description
 - Dickson Afful: 
-- Francis Oledibe: 
+- Francis Oledibe: https://drive.google.com/file/d/16uaV0HEnYpzjXlRgBRpA4_e9mjjlG1gr/view
 
 ### References
 - https://stackoverflow.com/questions/4078559/how-to-specify-doubles-precision-on-hibernate
